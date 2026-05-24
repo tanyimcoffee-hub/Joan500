@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TypeTrack 100 | Touch Typing Study</title>
+    <meta name="description" content="A touch typing study website with levels from 0 to 100, live typing practice, accuracy, WPM, streaks, and progress tracking.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#trainer" aria-label="TypeTrack 100 home">
+        <span class="brand-mark">T100</span>
+        <span>
+          <strong>TypeTrack 100</strong>
+          <small>Touch typing study</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="#trainer">Trainer</a>
+        <a href="#levels">Levels</a>
+        <a href="#keyboard">Keyboard</a>
+        <a href="#progress">Progress</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="trainer-shell" id="trainer">
+        <aside class="control-panel" aria-label="Typing controls">
+          <div class="level-card">
+            <span class="panel-label">Current level</span>
+            <div class="level-number" id="currentLevel">0</div>
+            <div class="level-range" id="levelRange">Home row start</div>
+          </div>
+
+          <label class="field">
+            <span>Level</span>
+            <input id="levelSlider" type="range" min="0" max="100" value="0">
+          </label>
+
+          <div class="stepper" aria-label="Level controls">
+            <button class="icon-btn" id="previousLevel" type="button" title="Previous level" aria-label="Previous level">-</button>
+            <button class="text-btn" id="restartLesson" type="button">Restart</button>
+            <button class="icon-btn" id="nextLevel" type="button" title="Next level" aria-label="Next level">+</button>
+          </div>
+
+          <div class="stat-grid">
+            <div>
+              <span>WPM</span>
+              <strong id="wpmStat">0</strong>
+            </div>
+            <div>
+              <span>Accuracy</span>
+              <strong id="accuracyStat">100%</strong>
+            </div>
+            <div>
+              <span>Progress</span>
+              <strong id="progressStat">0%</strong>
+            </div>
+            <div>
+              <span>Best</span>
+              <strong id="bestStat">0%</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="typing-workspace" aria-label="Typing lesson">
+          <div class="workspace-head">
+            <div>
+              <span class="panel-label" id="lessonBand">Level 0</span>
+              <h1 id="lessonTitle">Home row start</h1>
+            </div>
+            <div class="status-pill" id="lessonStatus">Ready</div>
+          </div>
+
+          <div class="prompt-box" id="promptText" aria-label="Text to type"></div>
+
+          <label class="typing-label" for="typingInput">Typing input</label>
+          <textarea id="typingInput" spellcheck="false" autocomplete="off" autocapitalize="off" rows="4"></textarea>
+
+          <div class="workspace-actions">
+            <button class="primary-btn" id="focusInput" type="button">Start typing</button>
+            <button class="secondary-btn" id="completeLevel" type="button">Mark complete</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="section level-map-section" id="levels">
+        <div class="section-heading">
+          <span class="panel-label">Study path</span>
+          <h2>Levels 0 to 100</h2>
+        </div>
+        <div class="level-map" id="levelMap" aria-label="Level map"></div>
+      </section>
+
+      <section class="section keyboard-section" id="keyboard">
+        <div class="section-heading">
+          <span class="panel-label">Finger map</span>
+          <h2>Keyboard focus</h2>
+        </div>
+        <div class="keyboard" id="keyboardView" aria-label="Keyboard display"></div>
+      </section>
+
+      <section class="section progress-section" id="progress">
+        <div class="section-heading">
+          <span class="panel-label">Saved locally</span>
+          <h2>Your progress</h2>
+        </div>
+        <div class="progress-layout">
+          <div class="progress-meter">
+            <div class="meter-ring">
+              <span id="completedCount">0</span>
+              <small>/ 101</small>
+            </div>
+            <p id="progressMessage">No levels completed yet.</p>
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
