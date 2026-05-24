@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joan500 | Vintage Second-Hand Store</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-wrap" aria-label="เมนูหลัก">
+      <a class="brand" href="#home" data-home-link>
+        <span class="brand-logo">
+          <img id="brandLogo" alt="Joan500 logo">
+          <span>J5</span>
+        </span>
+        <span class="brand-name">Joan500</span>
+      </a>
+
+      <div class="nav-tabs" id="navTabs" aria-label="หมวดสินค้า"></div>
+
+      <div class="social-actions" aria-label="ช่องทางติดต่อ">
+        <a class="social-btn" id="instagramBtn" href="#" aria-label="Instagram">IG</a>
+        <a class="social-btn line" id="lineBtn" href="#" aria-label="LINE">LINE</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="kicker">Vintage second-hand pieces</div>
+        <h1><span>Joan</span><span>500</span></h1>
+        <p>ร้านของมือสองสไตล์วินเทจ คัดไอเท็มที่มีคาแรกเตอร์ พร้อมรหัสสินค้าให้ทักถามได้ตรงชิ้น</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#products">ดูสินค้า</a>
+          <a class="ghost-btn" href="#contact">ช่องทางติดต่อ</a>
+        </div>
+      </div>
+
+      <div class="hero-board" aria-label="ตัวอย่างสินค้า">
+        <div class="hero-logo-card">
+          <img id="heroLogo" alt="Joan500 profile">
+          <span>Joan500</span>
+        </div>
+        <div class="hero-preview" id="heroPreview"></div>
+      </div>
+    </section>
+
+    <section class="products-section" id="products" aria-labelledby="productsTitle">
+      <div class="section-heading">
+        <div>
+          <span class="section-tag" id="productsTag">Selected drops</span>
+          <h2 id="productsTitle">สินค้าแนะนำ</h2>
+        </div>
+        <p id="productsIntro">หน้าหลักจะแสดงสินค้าบางส่วนก่อน เลือกแท็บด้านบนเพื่อดูสินค้าแยกตามหมวด</p>
+      </div>
+
+      <div class="category-row" id="categoryRow" aria-label="เลือกหมวดสินค้า"></div>
+      <div class="product-grid" id="productGrid"></div>
+      <p class="empty-state" id="emptyState" hidden>ยังไม่มีรูปสินค้าในหมวดนี้</p>
+    </section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contactTitle">
+      <div>
+        <span class="section-tag">Contact</span>
+        <h2 id="contactTitle">ติดต่อ Joan500</h2>
+        <p>ปุ่ม Instagram และ LINE เตรียมไว้เป็น placeholder สำหรับใส่ลิงก์จริงทีหลัง ส่วนปุ่มทักจากสินค้าเตรียมข้อความพร้อมรหัสสินค้าให้แล้ว</p>
+      </div>
+      <div class="contact-buttons">
+        <a class="primary-btn" id="contactLineBtn" href="#">LINE</a>
+        <a class="ghost-btn dark" id="contactIgBtn" href="#">Instagram</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="productModal" aria-hidden="true">
+    <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="ปิด">×</button>
+      <div class="modal-media">
+        <img id="modalImage" alt="">
+        <div class="modal-placeholder" id="modalPlaceholder">J500</div>
+      </div>
+      <div class="modal-info">
+        <span class="code-pill" id="modalCode"></span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+        <dl class="product-details">
+          <div>
+            <dt>หมวด</dt>
+            <dd id="modalCategory"></dd>
+          </div>
+          <div>
+            <dt>ราคา</dt>
+            <dd id="modalPrice"></dd>
+          </div>
+          <div>
+            <dt>สถานะ</dt>
+            <dd>พร้อมสอบถาม</dd>
+          </div>
+        </dl>
+        <a class="primary-btn full" id="modalLineBtn" href="#">ทัก LINE จากรหัสสินค้านี้</a>
+      </div>
+    </article>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
