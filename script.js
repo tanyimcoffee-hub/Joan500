@@ -34,7 +34,7 @@ const CATEGORY_PREFIX = {
 };
 
 const INSTAGRAM_URL = "#";
-const LINE_PAGE_URL = "#";
+const LINE_PAGE_URL = "https://line.me/R/ti/p/@684hwuou";
 const LINE_OA_ID = "";
 const STATIC_LOGO = "logo/joan500-logo.jpg";
 const STATIC_PRODUCTS = [
@@ -109,10 +109,10 @@ const productsIntro = document.querySelector("#productsIntro");
 const emptyState = document.querySelector("#emptyState");
 const heroPreview = document.querySelector("#heroPreview");
 const brandLogo = document.querySelector("#brandLogo");
-const heroLogo = document.querySelector("#heroLogo");
 const modal = document.querySelector("#productModal");
 const modalClose = document.querySelector("#modalClose");
 const modalImage = document.querySelector("#modalImage");
+const modalImageCode = document.querySelector("#modalImageCode");
 const modalPlaceholder = document.querySelector("#modalPlaceholder");
 const modalCode = document.querySelector("#modalCode");
 const modalTitle = document.querySelector("#modalTitle");
@@ -121,6 +121,8 @@ const modalCategory = document.querySelector("#modalCategory");
 const modalPrice = document.querySelector("#modalPrice");
 const modalLineBtn = document.querySelector("#modalLineBtn");
 const toast = document.querySelector("#toast");
+let modalCloseTimer = null;
+let lastFocusedElement = null;
 
 function init() {
   wireSocialButtons();
@@ -150,7 +152,7 @@ function fallbackProducts() {
 }
 
 function setLogo(src) {
-  [brandLogo, heroLogo].forEach((image) => {
+  [brandLogo].filter(Boolean).forEach((image) => {
     image.classList.remove("is-hidden");
     image.src = src || "";
     image.onerror = () => image.classList.add("is-hidden");
@@ -294,7 +296,6 @@ function productCard(product, index = 0) {
       <div class="product-body">
         <div class="product-meta">
           <span>${product.category}</span>
-          <span>${product.code}</span>
         </div>
         <h3>${escapeHtml(product.name)}</h3>
         <div class="price">${escapeHtml(product.price)}</div>
@@ -311,8 +312,9 @@ function renderHeroPreview() {
   }
 
   heroPreview.innerHTML = withImages.map((product) => `
-    <div class="hero-thumb">
+    <div class="hero-thumb" style="--tile-color: ${CATEGORY_COLORS[product.category] || CATEGORY_COLORS.Other}">
       <img src="${product.image}" alt="${escapeHtml(product.name)}">
+      <span>${product.code}</span>
     </div>
   `).join("");
 }
@@ -321,6 +323,9 @@ function openProduct(code) {
   const product = state.products.find((item) => item.code === code);
   if (!product) return;
   state.activeProduct = product;
+  lastFocusedElement = document.activeElement;
+  window.clearTimeout(modalCloseTimer);
+  modal.classList.remove("is-closing");
 
   modal.style.setProperty("--modal-color", CATEGORY_COLORS[product.category] || CATEGORY_COLORS.Other);
   modalCode.textContent = product.code;
@@ -328,23 +333,37 @@ function openProduct(code) {
   modalDescription.textContent = product.description;
   modalCategory.textContent = product.category;
   modalPrice.textContent = product.price;
+  modalImageCode.textContent = product.code;
   modalPlaceholder.textContent = product.code;
 
   modalImage.classList.remove("is-hidden");
+  modalImage.parentElement.classList.toggle("has-image", Boolean(product.image));
   modalImage.src = product.image || "";
   modalImage.alt = product.image ? product.name : "";
-  modalImage.onerror = () => modalImage.classList.add("is-hidden");
+  modalImage.onerror = () => {
+    modalImage.classList.add("is-hidden");
+    modalImage.parentElement.classList.remove("has-image");
+  };
 
   modalLineBtn.href = buildLineHref(product);
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
+  modal.scrollTop = 0;
   document.body.style.overflow = "hidden";
+  window.setTimeout(() => modalClose.focus({ preventScroll: true }), 80);
 }
 
 function closeProduct() {
-  modal.classList.remove("is-open");
+  if (!modal.classList.contains("is-open") || modal.classList.contains("is-closing")) return;
+  modal.classList.add("is-closing");
   modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
+  modalCloseTimer = window.setTimeout(() => {
+    modal.classList.remove("is-open", "is-closing");
+    document.body.style.overflow = "";
+    if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      lastFocusedElement.focus({ preventScroll: true });
+    }
+  }, 260);
 }
 
 function buildLineMessage(product) {
